@@ -1,0 +1,132 @@
+openapi: 3.0.2
+info:
+  title: Calculator_yaml
+  version: '1.0'
+  description: >-
+    Set of apis for the use of a calculator
+
+tags:
+  - name: Sum
+  - name: Substrac
+servers:
+  - url: https://localhost:8081/Calculator_yaml
+    description: >-
+      Local direction for the apis
+
+# Controllers
+paths:
+  #Sum
+  /Sum/Operator_1/{operator_1}/Operator_2/{operator_2}:
+    get:
+      description: Method get for the sum operation
+      tags:
+        - "Sum"
+      parameters:
+        - $ref: '#/components/parameters/Operator_1'
+        - $ref: '#/components/parameters/Operator_2'
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '400':
+          description: KO
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UrlError'
+        '404':
+          description: KO
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
+  #Substrac
+  /Substrac/Operator_1/{operator_1}/Operator_2/{operator_2}:
+    get:
+      description: Method get for the Substrac operation
+      tags:
+        - "Substrac"
+      parameters:
+        - $ref: '#/components/parameters/Operator_1'
+        - $ref: '#/components/parameters/Operator_2'
+
+      responses :
+        '200' :
+          description : OK
+          content :
+            application/json :
+              schema :
+                $ref : '#/components/schemas/Operation'
+        '400' :
+          description : KO
+          content :
+            application/json :
+              schema :
+                $ref : '#/components/schemas/UrlError'
+        '404' :
+          description : KO
+          content :
+            application/json :
+              schema :
+                $ref : '#/components/schemas/ServerError'
+
+# COMPONENTS
+components:
+  parameters: # Creation of parameters
+    Operator_1:
+      name: operator_1
+      example: '35'
+      description: "one of the operators for the operation"
+      in: path
+      required: true
+      schema:
+        type: number
+        format: int64
+    Operator_2:
+      name: operator_2
+      example: '43'
+      description: "one of the operators for the operation"
+      in: path
+      required: true
+      schema:
+        type: number
+        format: int64
+
+  schemas: # Creation of objects
+    Operation:
+      type: object
+      properties:
+        result:
+          type: string
+          description: The resul for the operation
+
+    ServerError:
+      type: object
+      properties:
+        code_error:
+          type: string
+          description: This is the error code
+        error_description:
+          type: string
+          description: this is an error that appears when a page is not available.
+      example:
+        code_error: "404 Not Found"
+        error_description: "The page is not available"
+
+    UrlError:
+      type: object
+      properties:
+        code_error:
+          type: string
+          description: This is the error code
+        error_description:
+          type: string
+          description: the specified url is not found, this url is not well generated.
+      example:
+        code_error: "400 Bad Request"
+        error_descript: "The url is not well generated"
