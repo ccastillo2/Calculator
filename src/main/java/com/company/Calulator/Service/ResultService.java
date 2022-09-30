@@ -2,7 +2,6 @@ package com.company.Calulator.Service;
 
 import com.company.Calulator.DTO.ResultObject;
 
-import java.math.BigDecimal;
 
 public interface ResultService {
     ResultObject sum (Float operator_1, Float operator_2);

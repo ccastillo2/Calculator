@@ -1,15 +1,18 @@
 package com.company.Calulator.Service.ServiceImpl;
 
 import com.company.Calulator.DTO.ResultObject;
+import io.corp.calculator.TracerImpl;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class ResultServiceImplTest {
 
-    private final ResultServiceImpl resultService = new ResultServiceImpl();
-
+    @MockBean
+    private final ResultServiceImpl resultService = new ResultServiceImpl(new TracerImpl());
 
     @Test
     void sum_of_normal_values() {
